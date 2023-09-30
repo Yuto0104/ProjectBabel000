@@ -50,7 +50,7 @@ CMotion::CMotion(const char * pFileName)
 	m_bMotionBlend = false;
 
 	// モーションの停止
-	m_bStop = false;								
+	m_bStop = false;
 }
 
 //=============================================================================
@@ -113,7 +113,7 @@ void CMotion::SetMotion(const int nCntMotionSet)
 		D3DXVECTOR3 posOrigin = m_pParts.at(nCntParts)->GetPosOrigin();		// 元の位置
 		D3DXVECTOR3 rotOrigin = m_pParts.at(nCntParts)->GetRotOrigin();		// 元の向き
 
-		// 位置の設定
+																			// 位置の設定
 		pos = (posOrigin + motion.pKeySet[motion.nCntKeySet].pKey[nCntParts].pos);
 
 		//	向きの設定
@@ -147,7 +147,7 @@ void CMotion::SetMotion(const int nCntMotionSet, const int nNumKeySet)
 		D3DXVECTOR3 posOrigin = m_pParts.at(nCntParts)->GetPosOrigin();		// 元の位置
 		D3DXVECTOR3 rotOrigin = m_pParts.at(nCntParts)->GetRotOrigin();		// 元の向き
 
-		// 位置の設定
+																			// 位置の設定
 		pos = (posOrigin + motion.pKeySet[nNumKeySet].pKey[nCntParts].pos);
 
 		//	向きの設定
@@ -209,11 +209,11 @@ void CMotion::PlayMotion()
 
 		if (motion.nCntFrame == 0)
 		{// フレームカウントが0の時
-			// 変数宣言
+		 // 変数宣言
 			D3DXVECTOR3 posOrigin = m_pParts.at(nCntParts)->GetPosOrigin();		// 元の位置
 			D3DXVECTOR3 rotOrigin = m_pParts.at(nCntParts)->GetRotOrigin();		// 元の向き
 
-			// 目的の位置と向きの算出
+																				// 目的の位置と向きの算出
 			posDest = (posOrigin + motion.pKeySet[motion.nCntKeySet].pKey[nCntParts].pos) - pos;
 			rotDest = (rotOrigin + motion.pKeySet[motion.nCntKeySet].pKey[nCntParts].rot) - rot;
 
@@ -252,7 +252,7 @@ void CMotion::PlayMotion()
 
 	if (motion.nCntFrame >= motion.pKeySet[motion.nCntKeySet].nFrame)
 	{// フレームカウントが指定のフレーム数を超えた場合
-		// フレーム数の初期化
+	 // フレーム数の初期化
 		motion.nCntFrame = 0;
 
 		// 再生中のキー番号数の加算
@@ -260,7 +260,7 @@ void CMotion::PlayMotion()
 
 		if (motion.nCntKeySet >= motion.nNumKey && motion.bLoop)
 		{// 再生中のキー数カウントがキー数の最大値を超えたとき、そのモーションがループを使用している
-			// 再生中のキー数カウントを初期化
+		 // 再生中のキー数カウントを初期化
 			motion.nCntKeySet = 0;
 
 		}
@@ -292,11 +292,11 @@ void CMotion::MotionBlend()
 
 		if (motion.nCntFrame == 0)
 		{// フレームカウントが0の時
-			// 変数宣言
+		 // 変数宣言
 			D3DXVECTOR3 posOrigin = m_pParts.at(nCntParts)->GetPosOrigin();		// 元の位置
 			D3DXVECTOR3 rotOrigin = m_pParts.at(nCntParts)->GetRotOrigin();		// 元の向き
 
-			// 目的の位置と向きの算出
+																				// 目的の位置と向きの算出
 			CMotion::MyKey myKey = motion.pKeySet[motion.nCntKeySet].pKey[nCntParts];
 			posDest = posOrigin + myKey.pos - pos;
 			rotDest = rotOrigin + myKey.rot - rot;
@@ -365,7 +365,7 @@ void CMotion::LoodSetMotion(const char *pFileName)
 	int nCntParts = 0;				// パーツ数のカウント
 	int nCntMotion = 0;				// モーション数のカウント
 
-	// ファイルポインタの宣言
+									// ファイルポインタの宣言
 	FILE * pFile;
 
 	//ファイルを開く
@@ -626,7 +626,7 @@ void CMotion::Uninit(void)
 		}
 	}
 
-	for(int i = 0; i < (int)m_pParts.size();i++)
+	for (int i = 0; i < (int)m_pParts.size(); i++)
 	{
 		if (m_pParts.at(i) != nullptr)
 		{

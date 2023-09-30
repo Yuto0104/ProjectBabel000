@@ -88,10 +88,16 @@ HRESULT CGame::Init()
 	pSphere->SetSphereRange(D3DXVECTOR2(D3DX_PI * 2.0f, D3DX_PI * -0.5f));
 	pSphere->LoadTex(1);
 
+	// 地面の生成
+	CMesh3D *pField = CMesh3D::Create();
+	pField->SetSize(D3DXVECTOR3(20000.0f, 0.0f, 20000.0f));
+	pField->SetBlock(CMesh3D::DOUBLE_INT(10,10));
+	pField->SetSplitTex(true);
+	pField->SetUseCollison(true);
+
 	// プレイヤーの設定
 	m_pPlayer = CPlayer::Create();
-	m_pPlayer->SetMotion("data/MOTION/motion001.txt");
-	m_pPlayer->SetPos(D3DXVECTOR3(724.0f, 0.0f, 2700.0f));
+	m_pPlayer->SetMotion("data/MOTION/motion.txt");
 
 	// カメラの追従設定(目標 : プレイヤー)
 	CCamera *pCamera = CApplication::GetCamera();

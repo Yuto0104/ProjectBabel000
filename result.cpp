@@ -20,7 +20,7 @@
 // Author : “‚ú±Œ‹“l
 // ŠT—v : ƒCƒ“ƒXƒ^ƒ“ƒX¶¬Žž‚És‚¤ˆ—
 //=============================================================================
-CResult::CResult()
+CResult::CResult() : m_bPressEnter(true)
 {
 
 }
@@ -78,6 +78,9 @@ void CResult::Update()
 
 	// “ü—Íî•ñ‚ÌŽæ“¾
 	CKeyboard *pKeyboard = CApplication::GetKeyboard();
+
+	// Ž©“®‘JˆÚ
+	AutoTransition();
 
 	if (m_bPressEnter
 		&& pKeyboard->GetTrigger(DIK_RETURN))
