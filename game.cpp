@@ -21,7 +21,9 @@
 #include "object.h"
 #include "object3D.h"
 #include "player.h"
+#include "model_obj.h"
 #include "motion_model3D.h"
+#include "collision_rectangle3D.h"
 #include "model3D.h"
 #include "mesh.h"
 #include "sphere.h"
@@ -98,6 +100,14 @@ HRESULT CGame::Init()
 	// プレイヤーの設定
 	m_pPlayer = CPlayer::Create();
 	m_pPlayer->SetMotion("data/MOTION/motion.txt");
+
+	// モデル
+	CModelObj *pModel = CModelObj::Create();
+	pModel->SetType(1);
+	CCollision_Rectangle3D* pCollision = pModel->GetCollision();
+	D3DXVECTOR3 modelSize = pModel->GetModel()->GetMyMaterial().size;
+	pCollision->SetSize(modelSize);
+	pCollision->SetPos(D3DXVECTOR3(0.0f, modelSize.y / 2.0f, 0.0f));
 
 	// カメラの追従設定(目標 : プレイヤー)
 	CCamera *pCamera = CApplication::GetCamera();

@@ -17,6 +17,7 @@
 
 #include "super.h"
 #include "renderer.h"
+#include "collision.h"
 #include "debug_proc.h"
 #include "keyboard.h"
 #include "mouse.h"
@@ -197,6 +198,9 @@ void CApplication::SetMode(SCENE_MODE mode)
 	// オブジェクトの解放
 	CSuper::ReleaseAll(false);
 
+	// 当たり判定の終了
+	CCollision::ReleaseAll();
+
 	m_mode = mode;
 
 	switch (m_mode)
@@ -352,6 +356,9 @@ void CApplication::Uninit()
 {
 	// オブジェクトの解放
 	CSuper::ReleaseAll(true);
+
+	// 当たり判定の終了
+	CCollision::ReleaseAll();
 
 	// モデル情報の終了
 	CModel3D::UninitModel();

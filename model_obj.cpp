@@ -16,6 +16,7 @@
 #include "model_obj.h"
 #include "renderer.h"
 #include "application.h"
+#include "collision_rectangle3D.h"
 
 //=============================================================================
 // インスタンス生成
@@ -69,6 +70,7 @@ void CModelObj::LoadFile(const char *pFileName)
 				CModelObj *pModelObj = Create();
 				assert(pModelObj != nullptr);
 				CModel3D *pModel = pModelObj->GetModel();
+				CCollision_Rectangle3D *pCollision = pModelObj->GetCollision();
 
 				while (strstr(&aStr[0], "END_MODELSET") == NULL)
 				{
@@ -112,6 +114,26 @@ void CModelObj::LoadFile(const char *pFileName)
 						fscanf(pFile, "%s", &aStr[0]);
 						fscanf(pFile, "%d", &nUse);
 						pModel->SetShadow(nUse);
+					}
+
+					if (strcmp(&aStr[0], "COLLISION_POS") == 0)
+					{// キー数の読み込み
+						D3DXVECTOR3 pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+						fscanf(pFile, "%s", &aStr[0]);
+						fscanf(pFile, "%f", &pos.x);
+						fscanf(pFile, "%f", &pos.y);
+						fscanf(pFile, "%f", &pos.z);
+						pCollision->SetPos(pos);
+					}
+
+					if (strcmp(&aStr[0], "COLLISION_SIZE") == 0)
+					{// キー数の読み込み
+						D3DXVECTOR3 size = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+						fscanf(pFile, "%s", &aStr[0]);
+						fscanf(pFile, "%f", &size.x);
+						fscanf(pFile, "%f", &size.y);
+						fscanf(pFile, "%f", &size.z);
+						pCollision->SetSize(size);
 					}
 				}
 
@@ -174,6 +196,10 @@ HRESULT CModelObj::Init()
 	assert(m_pModel != nullptr);
 	m_pModel->SetModelID(m_nType);
 
+	// 3D矩形の当たり判定の設定
+	m_pCollision = CCollision_Rectangle3D::Create();
+	m_pCollision->SetParent(this);
+
 	return E_NOTIMPL;
 }
 
@@ -191,6 +217,12 @@ void CModelObj::Uninit()
 		// メモリの解放
 		delete m_pModel;
 		m_pModel = nullptr;
+	}
+
+	if (m_pCollision != nullptr)
+	{// 終了処理
+		m_pCollision->Uninit();
+		m_pCollision = nullptr;
 	}
 
 	// オブジェクトの解放

@@ -22,6 +22,7 @@
 #include "mouse.h"
 #include "calculation.h"
 #include "move.h"
+#include "collision_rectangle3D.h"
 #include "debug_proc.h"
 #include "parts.h"
 #include "sound.h"
@@ -61,6 +62,7 @@ CPlayer * CPlayer::Create()
 // 概要 : インスタンス生成時に行う処理
 //=============================================================================
 CPlayer::CPlayer() : m_pMove(nullptr),
+m_pCollision(nullptr),
 m_EAction(NEUTRAL_ACTION),
 m_rotDest(D3DXVECTOR3(0.0f,0.0f,0.0f)),
 m_fSpeed(0.0f),
@@ -98,6 +100,12 @@ HRESULT CPlayer::Init()
 	assert(m_pMove != nullptr);
 	m_pMove->SetMoving(fSPEED, 1000.0f, 0.5f, 0.1f);
 
+	// 3D矩形の当たり判定の設定
+	m_pCollision = CCollision_Rectangle3D::Create();
+	m_pCollision->SetParent(this);
+	m_pCollision->SetPos(D3DXVECTOR3(0.0f, 25.0f, 0.0f));
+	m_pCollision->SetSize(D3DXVECTOR3(30.0f, 50.0f, 20.0f));
+
 	return E_NOTIMPL;
 }
 
@@ -117,6 +125,12 @@ void CPlayer::Uninit()
 	{// メモリの解放
 		delete m_pMove;
 		m_pMove = nullptr;
+	}
+
+	if (m_pCollision != nullptr)
+	{// 終了処理
+		m_pCollision->Uninit();
+		m_pCollision = nullptr;
 	}
 
 	// 終了
@@ -171,6 +185,8 @@ void CPlayer::Update()
 
 	// メッシュの当たり判定
 	CMesh3D::CollisonMesh(this);
+
+	m_pCollision->Collision(CObject::OBJTYPE_3DMODEL, true);
 
 	// 位置の取得
 	pos = GetPos();

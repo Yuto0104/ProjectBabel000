@@ -180,6 +180,12 @@
     <ClInclude Include="sphere.h">
       <Filter>ヘッダー ファイル\Object\3D</Filter>
     </ClInclude>
+    <ClInclude Include="collision.h">
+      <Filter>ヘッダー ファイル\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collision_rectangle3D.h">
+      <Filter>ヘッダー ファイル\Collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application.cpp">
@@ -292,6 +298,12 @@
     </ClCompile>
     <ClCompile Include="player.cpp">
       <Filter>ソース ファイル\Object\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="collision.cpp">
+      <Filter>ソース ファイル\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="collision_rectangle3D.cpp">
+      <Filter>ソース ファイル\Collision</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
